@@ -1,0 +1,158 @@
+﻿<style>
+    .right-margin{
+        margin-right: 10px !important;
+    }
+    .badge-multi-filter {
+        margin-right: 5px;
+        margin-bottom: 5px;
+        padding: 10px 10px;
+        font-size: 14px;
+        font-weight: 100;
+        line-height: 1;
+        color: red;
+        background-color: rgba(0, 150, 136, 0.1);
+        border-radius: 2px;
+    }
+    .badge-multi-filter .filter-name {
+        color: #009688;
+    }
+    .badge-multi-filter .filter-search-text {
+        color: black;
+    }
+    .badge-delete-filter {
+        cursor: pointer;
+    }
+</style>
+
+<div class="form-inline search-style">
+    <div class="pull-left">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span>
+            
+            <!--Search Text-->
+            <input ng-hide="queryModel.queryType=='Enum' || queryModel.queryType=='Flag' || queryModel.type=='Price' || queryModel.queryType=='Others' || queryModel.queryType=='DateTime' || queryModel.queryType=='Range'"
+                   type="text"
+                   name="search"
+                   class="form-control right-margin"
+                   placeholder="Search"
+                   ng-model="queryModel.searchText"
+                   ng-change="search()"
+                   ng-enter="queryModel.searchText.length != 0 && addFilter(queryModel)" />
+            
+            <!--Selection-->
+            <select ng-show="queryModel.queryType=='Enum' || queryModel.queryType=='Flag' || queryModel.queryType=='Others'"
+                    class="form-control right-margin"
+                    ng-model="selectedOption.selectedValue"
+                    ng-options="option as option.name for option in selectedOption.enumTypeList"
+                    ng-change="search()"
+                    required></select>
+
+            <!--Duration-->
+            <div class="input-group" ng-show="queryModel.queryType=='DateTime'">
+                <div class="input-group-addon">Duration Type</div>
+                <select class="form-control right-margin"
+                        ng-model="calendar.durationType"
+                        ng-options="durationType for durationType in calendar.durationTypeList"
+                        ng-change="durationTypeChanged()"
+                        required></select>
+                <div class="input-group-addon" ng-show="calendar.durationType!='Custom'">Duration</div>
+                <select class="form-control right-margin"
+                        ng-show="calendar.durationType!='Custom'"
+                        ng-model="calendar.duration"
+                        ng-options="duration.displayText for duration in calendar.durationList"
+                        ng-change="durationChanged()"
+                        required></select>
+            </div>
+
+            <!--Calender-->
+            <div class="input-group" ng-show="queryModel.queryType=='DateTime' && calendar.durationType=='Custom'">
+                <div class="input-group-addon">From</div>
+                <input type="text"
+                        name="startDate"
+                        class="form-control right-margin"
+                        placeholder="Click To Select Start Date"
+                        ng-model="queryModel.startDate"
+                        is-open="calendar.startDateIsOpen"
+                        ng-click="openCalendar('startDateIsOpen')"
+                        ng-change="search()"
+                        ng-required="true"
+                        close-text="Close"
+                        uib-datepicker-popup="yyyy-MM-dd"
+                        readonly />
+                <div class="input-group-addon">To</div>
+                <input type="text"
+                        name="endDate"
+                        class="form-control right-margin"
+                        placeholder="Click To Select End Date"
+                        ng-model="queryModel.endDate"
+                        is-open="calendar.endDateIsOpen"
+                        ng-click="openCalendar('endDateIsOpen')"
+                        ng-change="search()"
+                        ng-required="true"
+                        close-text="Close"
+                        uib-datepicker-popup="yyyy-MM-dd"
+                        readonly />
+            </div>
+
+            <!--Price Range-->
+            <div class="input-group" ng-show="queryModel.queryType=='Range'">
+                <div class="input-group-addon">RM</div>
+                <input class="form-control right-margin"
+                        type="number"
+                        ng-model="queryModel.minimum"
+                        ng-change="search()">
+                <div class="input-group-addon">~</div>
+                <input class="form-control right-margin"
+                        type="number"
+                        ng-model="queryModel.maximum"
+                        ng-change="search()">
+            </div>
+
+            <!--Numeric-->
+            <div class="input-group" ng-show="queryModel.queryType=='Int32'">
+                <input class="form-control right-margin"
+                       type="number"
+                       ng-model="queryModel.searchText"
+                       ng-change="search()">
+            </div>
+        </div>
+
+        <div class="input-group" ng-show="filterOptions.length > 0">
+            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-model="queryModel.type">
+                {{selectedOption.displayName}}&nbsp;&nbsp;<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li ng-repeat="filterSelection in filterOptions track by $index" ng-click="selectOption(filterSelection)"><a href="">{{filterSelection.displayName}}</a></li>
+            </ul>
+        </div>
+
+        <button type="button" class="input-group btn-link" ng-click="addFilter(queryModel)" ng-disabled="isShowFilterBtn()" ng-show="filterOptions.length > 0">
+            <i class="fa fa-plus fa-fw"></i>
+        </button>
+        <a class="input-group btn-link" ng-click="resetFilter()" ng-show="queryModel.multipleFilters.length > 0">
+            <i class="fa fa-trash fa-fw"></i>
+        </a>
+    </div>
+    <ul class="nav navbar-nav input-group pull-right">
+        <li class="nav-item" ng-click="search()">
+            <a class="btn btn-default btn-raised btn-sm">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+    <div class="input-group pull-right" ng-show="sortOptions.length > 0">
+        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            {{selectedSort.displayName}}&nbsp;&nbsp;<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li ng-repeat="sortSelection in sortList track by $index" ng-click="selectSort(sortSelection)"><a href="">{{sortSelection.displayName}}</a></li>
+        </ul>
+    </div>
+
+    <div class="col-xs-12">
+        <span class="badge badge-multi-filter" ng-repeat="filter in queryModel.multipleFilters track by $index">
+            <span class="filter-name">{{filter.displayName}}</span> <span class="filter-search-text">{{filter.displayText}}</span>
+            <i class="fa fa-times badge-delete-filter" aria-hidden="true" ng-click="removeFilter(filter)"></i>
+        </span>
+    </div>
+</div>

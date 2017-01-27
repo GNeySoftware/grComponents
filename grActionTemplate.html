@@ -1,0 +1,9 @@
+﻿<div class="form-inline search-style" style="margin-bottom: 5px;">
+    <div class="input-group pull-right">
+        <button ng-repeat="btn in actionList" ng-click="executeCommand(btn)" class="btn btn-default btn-raised"
+                ng-attr-style="{{btnStyle(btn)}}"
+                ng-show="isShow(btn.isDefault) && (btn.show == false ? false : true)" ng-disabled="!checkExecution(btn)">
+            <i ng-class="{'fa fa-{{btn.icon}}': btn.icon}" aria-hidden="true"></i> {{btn.name}}
+        </button>
+    </div>
+</div>
