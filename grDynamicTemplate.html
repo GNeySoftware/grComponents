@@ -1,0 +1,134 @@
+﻿<div class="form-group gr-{{input? 'input-' + input : 'display'}}" ng-form="form"
+     ng-class="{ 'with-error' : (form.value.$touched || form.$submitted) && form.value.$invalid }">
+    <label class="control-label">{{label}} <span ng-show="required && input" class="required-hint">*</span></label>
+    <div class="input-group display-group">
+        <span class="input-group-addon"><i class="fa fa-fw {{(icon || !modelName)? icon : 'fa-ellipsis-h'}}"></i></span>
+        <!--<span style="font-size: xx-small; color: lightgray;">
+                Touched: {{form.value.$touched}}
+                Invalid: {{form.value.$invalid}}
+                Error: {{form.value.$error}}
+            </span>-->
+        <div class="gr-content" ng-switch="input">
+            <!--display-->
+            <div ng-switch-default style="word-break:break-all; white-space: pre-wrap;"
+                 class="control-display gr-dyn-{{input? 'input-' + input : 'display'}}">{{box.display? box.display : model}}</div>
+            <!--text-->
+            <input name="value" class="form-control" type="text"
+                   autocomplete="off"
+                   ng-switch-when="text" placeholder="{{placeholder}}"
+                   ng-required="required" ng-model="box.model" />
+            <!--email-->
+            <input name="value" class="form-control" type="email" ng-switch-when="email"
+                   gr-dyn-att placeholder="{{placeholder}}" ng-required="required" ng-model="box.model" />
+            <!--password-->
+            <input name="value" class="form-control" type="password" ng-switch-when="password" gr-dyn-att
+                   placeholder="{{placeholder}}" ng-required="required" ng-model="box.model" />
+            <!--integer-->
+            <input name="value" class="form-control" ng-switch-when="integer" type="number" gr-dyn-att
+                   placeholder="{{placeholder}}" ng-required="required" ng-model="box.model" />
+            <!--number-->
+            <input class="form-control" name="value"
+                   gr-dyn-att
+                   ng-switch-when="number" type="number" placeholder="{{placeholder}}" ng-required="required" ng-model="box.model" step="0.01" />
+            <!--boolean-->
+            <label class="checkbox-inline" ng-class="checkboxcheck" ng-switch-when="boolean">
+                <input type="checkbox" name="value"
+                       ng-model="box.model" ng-required="required" /> {{placeholder}}
+            </label>
+            <!--date-->
+            <div ng-switch-when="date" class="gr-dyn-{{input? 'input-' + input : 'display'}}">
+                <input type="text" class="form-control" name="value"
+                       ng-required="required"
+                       uib-datepicker-popup="d-M-yyyy" is-open="calendar.isOpened"
+                       datepicker-options="dateOptions"
+                       close-text="Close" ng-model="calendar.selectedDate" ng-change="dateChanged()"
+                       ng-click="calendar.isOpened = true" placeholder="{{placeholder}}" />
+            </div>
+            <!--time-->
+            <div ng-switch-when="time">
+                <uib-timepicker class="timepicker" name="value" ng-model="time.selectedTime" ng-change="timeChanged()" hour-step="1" minute-step="1" show-meridian="true" show-spinners="false"></uib-timepicker>
+            </div>
+            <!--textarea-->
+            <textarea class="form-control"
+                      autocomplete="off"
+                      rows="{{rows}}" ng-switch-when="textArea" name="value"
+                      ng-model="box.model" placeholder="{{placeholder}}" ng-required="required"></textarea>
+            <!--autoComplete-->
+            <div ng-switch-when="autoComplete" class="gr-dyn-{{input? 'input-' + input : 'display'}}">
+                <input name="value" class="form-control" type="text" ng-model="box.model"
+                       ng-change="modelChanged()"
+                       autocomplete="off"
+                       typeahead-on-select="modelSelected($item, $model, $label)"
+                       typeahead-template-url="{{template? template : ''}}" auto-complete-validator
+                       uib-typeahead="item as getValue(item, displayProperty) for item in search($viewValue)"
+                       ng-required="required"
+                       placeholder="{{placeholder}}" />
+            </div>
+            <!--select-->
+            <select name="value" class="form-control select-entity" ng-hide="enumName"
+                    bootstrap-select ng-model="box.model"
+                    ng-options="item as getValue(item, displayProperty) for item in selection"
+                    ng-required="required"
+                    ng-switch-when="select">
+                <option value="" ng-hide="hideDefaultOption">{{placeholder?placeholder:'--Please select--'}}</option>
+            </select>
+            <select class="form-control select-enum" ng-show="enumName"
+                    convert-to-number bootstrap-select ng-model="box.model"
+                    ng-required="required"
+                    ng-options="k as v for (k,v) in selection" ng-switch-when="select">
+                <option value="" ng-hide="hideDefaultOption">{{placeholder?placeholder:'--Please select--'}}</option>
+            </select>
+            <!--enum-->
+            <div ng-switch-when="enum">
+                <a ng-repeat="(key, name) in selection" ng-click="select(key)" ng-class="{ 'btn-raised' : key == model }" class="btn btn-default btn-sm active">
+                    {{name}}
+                </a>
+            </div>
+            <!--flag-->
+            <div ng-switch-when="flag">
+                <a ng-repeat="(key, name) in selection | orderBy: 'key'" ng-click="select(key)" ng-class="{ 'btn-raised' : flagRaised(key) }"
+                   class="btn btn-default btn-sm active">
+                    {{name}}
+                </a>
+            </div>
+            <!--booleanNullable-->
+            <div ng-switch-when="booleanNullable">
+                <a ng-click="box.model = null" ng-class="{ 'btn-raised' : box.model == null }"
+                   class="btn btn-default btn-sm active">
+                    Unanswered
+                </a>
+                <a ng-click="box.model = true" ng-class="{ 'btn-raised' : box.model == true }"
+                   class="btn btn-default btn-sm active">
+                    Yes
+                </a>
+                <a ng-click="box.model = false" ng-class="{ 'btn-raised' : box.model == false }"
+                   class="btn btn-default btn-sm active">
+                    No
+                </a>
+            </div>
+            <!--multiAutoComplete-->
+            <div ng-switch-when="multiAutoComplete">
+                <tags-input ng-model="box.model" display-property="{{displayProperty}}"
+                            name="value"
+                            key-property="{{keyProperty}}" min-length="0"
+                            autocomplete="off" min-tags="{{required?1:0}}"
+                            placeholder="{{placeholder}}" add-from-autocomplete-only="true"
+                            replace-spaces-with-dashes="false">
+                    <auto-complete debounce-delay="500"
+                                   display-property="{{displayProperty}}"
+                                   source="search($query)" min-length="0" load-on-focus="true"
+                                   load-on-empty="true" max-results-to-show="{{ query.pageSize > 0 ? query.pageSize:5}}"
+                                   highlight-matched-text="true"
+                                   template="{{template? template : ''}}"></auto-complete>
+                </tags-input>
+            </div>
+        </div>
+        <div ng-show="form.value.$pending && form.value.$pending.length > 0 && (form.value.$touched || form.$submitted)" class="error-message">checking</div>
+        <div ng-show="form.value.$error.required && (form.value.$touched || form.$submitted)" class="text-danger error-message">This field cannot be empty.</div>
+        <div ng-show="!form.value.$error.required && form.value.$error.selected && (form.value.$touched || form.$submitted)" class="text-danger error-message">please select from the list</div>
+        <div ng-show="!form.value.$error.required && form.value.$error.date && (form.value.$touched || form.$submitted)" class="text-danger error-message">date format is invalid (d-m-yyyy)</div>
+        <div ng-show="!form.value.$error.required && form.value.$error.minlength && (form.value.$touched || form.$submitted)" class="text-danger error-message">Minimum characters.</div>
+        <div ng-show="form.value.$error.pattern && (form.value.$touched || form.$submitted)" class="text-danger error-message">Email format is incorrect.</div>
+    </div>
+</div>
+

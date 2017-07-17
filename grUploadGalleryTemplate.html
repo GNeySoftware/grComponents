@@ -1,0 +1,32 @@
+﻿<style>
+
+
+
+</style>
+
+<div class="gr-uploader">
+    <div class="input-group display-group">
+        <!--<span class="input-group-addon"><i class="fa fa-fw {{icon}}"></i></span>-->
+        <div class="input-group" ng-show="manage">
+            <button class=" btn btn-primary btn-height btn-raised" ng-show="files.length>0"
+                    ng-click="removeFiles()" type="button">
+                <i class="fa fa-trash fa-fw"></i>
+            </button>
+        </div>
+        <div class="file-container" ng-class="{'image-container': fileType == 'image'}">
+            <div class="container-child" ng-repeat="item in files">
+                <div ng-show="files" ng-click="item.selected=!item.selected; selectedItems()">
+                    <div ng-show="item.selected" class="selector"><i class="fa fa-check"></i></div>
+                    <img class="img-responsive" ng-hide="'|jpg|jpeg|png|bmp|img|jpe|jbg|mac|gif|psd|tga|tiff|wmf|'.indexOf((item.attachment? item.attachment.path : item.path).split('.').pop().toLowerCase()) == -1"
+                         ng-src="{{item.attachment? item.attachment.path : item.path}}"
+                         err-src="../images/default.png" />
+                    <div class="file-item" ng-hide="fileType == 'image'">
+                        <i class="fa {{getIcon(item.attachment?item.attachment.name:item.name)}}"></i>
+                        <a ng-href="{{item.attachment?item.attachment.path:item.path}}" target="_blank">{{item.attachment?item.attachment.name:item.name}}</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

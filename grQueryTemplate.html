@@ -1,0 +1,152 @@
+﻿<style>
+    .gr-query select {
+        font-size: 12.5px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+</style>
+
+<div class="gr-query form-inline search-style">
+    <div class="pull-left">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span>
+            <!--Search Text-->
+            <input ng-show="!selectedFilter.queryType || selectedFilter.queryType == 'string'"
+                   type="text" class="form-control right-margin"
+                   placeholder="Search" ng-model="queryModel.searchText"
+                   ng-model-options="{ debounce: 400 }"
+                   ng-enter="queryModel.searchText.length != 0 && addFilter(queryModel)" />
+            <!--auto complete-->
+            <gr-dyn no-label="true" ng-show="selectedFilter.queryType == 'Entity'"
+                    text="queryModel.searchText"
+                    display-property="selectedFilter.displayProperty"
+                    input="autoComplete" entity-name="selectedFilter.entityName"></gr-dyn>
+
+            <!--Selection-->
+            <select ng-show="selectedFilter.queryType=='Enum' || selectedFilter.queryType=='Flag' || selectedFilter.queryType=='Others'"
+                    class="form-control right-margin" ng-model="selectedFilter.selectedValue"
+                    convert-to-number bootstrap-select
+                    ng-options="k as v.name for (k,v) in selectedFilter.selection"
+                    ng-change="refresh()" required></select>
+
+            <!--Duration-->
+            <div class="input-group" ng-show="selectedFilter.queryType == 'DateTime'">
+                <div class="input-group">Duration Type</div>
+                <div class="input-group">
+                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{calendar.durationType.name}}&nbsp;&nbsp;<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="durationType in calendar.durationTypeList"
+                            ng-click="calendar.durationType = durationType; durationTypeChanged();">
+                            <a href="">{{durationType.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="input-group" ng-show="calendar.durationType.name !='Custom'">
+                    <a class=" btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{calendar.duration.displayText}}&nbsp;&nbsp;<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="duration in calendar.durationType.list"
+                            ng-click="calendar.duration = duration; refresh();">
+                            <a href="">{{duration.displayText}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--Calendar-->
+            <div class="input-group" ng-show="selectedFilter.queryType=='DateTime' && calendar.durationType.name =='Custom'">
+                <div class="input-group-addon">From</div>
+                <input type="text" class="form-control right-margin"
+                       ng-model="calendar.duration.startDate"
+                       is-open="calendar.startDateIsOpen"
+                       ng-click="openCalendar('startDateIsOpen')"
+                       ng-change="refresh()" ng-required="true"
+                       close-text="Close" uib-datepicker-popup />
+                <div class="input-group-addon">To</div>
+                <input type="text" class="form-control right-margin"
+                       ng-model="calendar.duration.endDate"
+                       is-open="calendar.endDateIsOpen"
+                       ng-click="openCalendar('endDateIsOpen')"
+                       ng-change="refresh()"
+                       ng-required="true"
+                       close-text="Close" uib-datepicker-popup />
+            </div>
+
+            <!--Price Range-->
+            <!--<div class="input-group" ng-show="selectedFilter.queryType=='Range'">
+                <div class="input-group-addon">RM</div>
+                <input class="form-control right-margin" type="number"
+                       ng-model="queryModel.minimum" ng-model-options="{ debounce: 200 }"
+                       ng-change="refresh()">
+                <div class="input-group-addon">~</div>
+                <input class="form-control right-margin" type="number"
+                       ng-model="queryModel.maximum" ng-model-options="{ debounce: 200 }"
+                       ng-change="refresh()">
+            </div>-->
+            <!--Numeric-->
+            <!--<div class="input-group" ng-show="selectedFilter.queryType=='Int32'">
+                <input class="form-control right-margin" type="number"
+                       ng-model="queryModel.searchText" ng-model-options="{ debounce: 200 }"
+                       ng-change="refresh()">
+            </div>-->
+        </div>
+        <div class="input-group" ng-show="filters.length > 0" style="display:inline;">
+            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+               ng-model="queryModel.type">
+                {{selectedFilter.displayName? selectedFilter.displayName : selectedFilter.name | displayName}}&nbsp;&nbsp;
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li ng-repeat="filter in filters track by $index"
+                    ng-click="selectOption(filter)">
+                    <a href="">{{filter.displayName? filter.displayName : filter.name | displayName}}</a>
+                </li>
+            </ul>
+        </div>
+
+        <button type="button" class="input-group btn-link" style="display:inline;"
+                ng-click="addFilter()"
+                ng-disabled="isShowFilterBtn()">
+            <i class="fa fa-plus fa-fw"></i>
+        </button>
+        <a class="input-group btn-link" ng-click="queryModel.multipleFilters = []; refresh();"
+           ng-show="queryModel.multipleFilters.length > 0">
+            <i class="fa fa-trash fa-fw"></i>
+        </a>
+    </div>
+    <ul class="nav navbar-nav input-group pull-right">
+        <li class="nav-item" ng-click="refresh()">
+            <a class="btn btn-default btn-raised btn-sm">
+                <i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;Refresh
+            </a>
+        </li>
+        <li class="nav-item" ng-hide="disableExport" ng-click="export()">
+            <a class="btn btn-default btn-raised btn-sm" style="background-color: #217346 !important;">
+                <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export
+            </a>
+        </li>
+    </ul>
+    <div class="pull-right" ng-show="sortOptions.length > 0">
+        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            {{selectedSort.displayName}}&nbsp;&nbsp;<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li ng-repeat="sortSelection in sortList track by $index"
+                ng-click="selectSort(sortSelection)">
+                <a href="">{{sortSelection.displayName}}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="badge badge-selected-multi-filter" ng-repeat="filter in queryModel.multipleFilters track by $index">
+                <span class="filter-name">{{filter.displayName | displayName}}: </span> <span class="filter-search-text">{{filter.displayText}}</span>
+                <i class="fa fa-times badge-delete-filter" aria-hidden="true" ng-click="queryModel.multipleFilters.splice($index, 1); refresh();"></i>
+            </span>
+        </div>
+    </div>
+</div>

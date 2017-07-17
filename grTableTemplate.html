@@ -1,0 +1,88 @@
+﻿<div class="table-panel">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered" gr-list="resultSet? resultSet.list : list" show-selection="showSelection">
+            <colgroup>
+                <col ng-repeat="column in  columnList | filter:filterFn" ng-style="{ width: column.width }" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th ng-repeat="column in  columnList | filter:filterFn " ng-click="sort(column)">
+                        <span>{{column.displayName? column.displayName : (column.name | displayName)}}</span>
+                        <span style="margin: 5px; margin-bottom: 20px;">
+                            <i ng-show="column.asc" class="fa fa-sort-down"></i>
+                            <i ng-show="column.desc" class="fa fa-sort-up"></i>
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in (resultSet? resultSet.list : list) track by $index"
+                    gr-list-data="item"
+                    show-selection="showSelection"
+                    ng-class="getRowStyle(item)">
+                    <td ng-repeat="column in columnList | filter:filterFn"
+                        ng-class="column.cellStyle && column.cellStyle(item)"
+                        ng-click="$parent.$parent.selectOne(item)">
+                        <span ng-hide="(column.command || column.link || column.template)" ng-bind="$eval('item.' + column.name + getFormat(column))"></span>
+                        <a ng-show="(column.command || column.link)" href="{{column.link(item)}}" ng-click="executeCommand(column, item)">
+                            <span ng-bind="$eval('item.' + column.name)"></span>
+                        </a>
+                        <div ng-show="column.template">
+                            <gr-cell item="item" parent="$parent.$parent.$parent" template="column.template"></gr-cell>
+                        </div>
+                    </td>
+                    <!--<td class="td-style">
+            <a class="icon-link" ng-click="editCustomer(customer); checkControl($event, customer)" uib-popover="Edit" popover-trigger="mouseenter" popover-placement="left">
+                <i class="fa fa-pencil-square-o fa-fw"></i>
+            </a>
+            <a class="icon-link" ng-click="openModal(customer); checkControl($event, customer)" uib-popover="Delete" popover-trigger="mouseenter" popover-placement="right">
+                <i class="fa fa-trash-o fa-fw"></i>
+            </a>
+        </td>-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="row table_pagination" ng-show="resultSet">
+    <div class="col-md-6">
+        <!--<label>Page Size</label>
+        <select class="form-control" ng-init="query.pageSize = 20" ng-model="query.pageSize">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
+            <option value="0">All</option>
+        </select>-->
+        <span>
+            {{(resultSet.pageSize * (resultSet.currentPage + 1)) - resultSet.pageSize + 1}} - {{(resultSet.totalItems > resultSet.pageSize * (resultSet.currentPage + 1))? resultSet.pageSize * (resultSet.currentPage + 1) : resultSet.totalItems }} of {{resultSet.totalItems}},&nbsp;
+        </span>
+        <select class="form-control" ng-init="query.pageSize = 20" ng-model="query.pageSize">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
+            <option value="0">All</option>
+        </select>
+        <span ng-show="query.pageSize != 0">per page</span><span>.</span>
+
+        <div>
+            <span ng-show="resultSet.summaries">
+                <span ng-repeat="(key, value) in resultSet.summaries">&nbsp;|&nbsp;{{key | displayName}}: {{value? value : 'None'}}</span>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <uib-pagination direction-links="false" boundary-links="true" max-size="6"
+                        items-per-page="resultSet.pageSize"
+                        total-items="resultSet.totalItems" ng-model="query.currentPage"></uib-pagination>
+    </div>
+</div>
+
+

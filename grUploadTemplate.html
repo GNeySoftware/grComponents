@@ -1,0 +1,30 @@
+﻿
+
+<div class="uploader-container">
+    <div class="uploader-panel" ng-if="uploader" nv-file-drop="" nv-file-over=""
+         uploader="uploader" over-class="another-file-over-class">
+        <div class="file-drop-overlay">
+            <span>Drop {{fileType? fileType: 'file'}} here</span>
+        </div>
+        <label class="btn btn-default btn-raised btn-file">
+            <i class="fa fa-upload fa-fw"></i> Browse
+            <input type="file" nv-file-select="" uploader="uploader" multiple>
+        </label>
+    </div>
+
+    <div class="upload-queue-container">
+        <div class="upload-queue-container-item" ng-repeat="item in uploader.queue" style="width: 120px">
+            <div class="imgClass" ng-show="uploader.isHTML5 && fileType == 'image'" ng-thumb="{ file: item._file, height: 120}">
+                <canvas></canvas>
+            </div>
+            <div ng-show="fileType != 'image'">
+                <span>{{item.file.name}}</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{item.progress}}"
+                 aria-valuemin="0" aria-valuemax="100" style="width:{{item.progress}}%">
+                {{item.progress}}
+            </div>
+        </div>
+    </div>
+</div>
+

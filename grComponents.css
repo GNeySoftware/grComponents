@@ -1,0 +1,694 @@
+﻿/* gr-991*/
+
+@media only screen and (min-width: 991px) {
+    .gr-991.col-md-12 {
+        width: calc(100% - 200px) !important;
+        margin-left: 200px;
+        min-height: 37px !important;
+    }
+
+    .gr-991.col-md-6 {
+        width: calc(50% - 200px) !important;
+        margin-left: 200px;
+        min-height: 37px !important;
+    }
+}
+
+@media only screen and (max-width: 990px) {
+    .gr-991.col-md-12 > a,
+    .gr-991.col-md-6 > a {
+        padding-left: 15px;
+        min-height: 48px !important;
+    }
+}
+
+
+/* gr-view */
+
+.gr-view {
+    background-color: whitesmoke;
+    border-radius: 4px;
+    padding: 0 0 10px;
+    margin: 0 0px;
+}
+
+@media (max-width: 990px) {
+    .gr-view {
+        padding: 10px 0 10px;
+    }
+}
+
+
+/* gr-table */
+
+
+
+gr-table {
+    margin-top: 15px;
+    display: block;
+}
+gr-table .table {
+    width:auto !important;
+    min-width:100% !important;
+     /*margin-bottom:0px;*/
+}
+
+gr-table .table-responsive {
+    min-height: .01%;
+    overflow-x: auto !important;
+    min-width:100% !important;
+    margin-bottom:15px;
+}
+
+    gr-table .table_pagination {
+        margin-top: -15px;
+    }
+
+    gr-table .pagination {
+        margin: 10px 0;
+    }
+
+    gr-table .table_pagination > div:nth-child(1) .form-control {
+        font-size: 14px;
+    }
+
+    gr-table .table_pagination > div:nth-child(2) {
+        text-align: right;
+    }
+
+    gr-table .table_pagination > div:nth-child(1) .form-group,
+    gr-table .table_pagination > div:nth-child(1) label {
+        display: inline-block;
+        width: auto;
+        font-weight: lighter;
+        color: #333;
+        font-size: 14px !important;
+    }
+
+    gr-table .table_pagination > div:nth-child(1) select {
+        width: 40px;
+        margin-bottom: 0px;
+    }
+
+    gr-table .table > thead > tr > th {
+        vertical-align: top;
+        padding: 5px;
+    }
+
+    gr-table .popover-content {
+        color: #333;
+    }
+    gr-table .table td span,
+    gr-table .table td {
+        /*overflow-x: hidden; */
+        /* white-space: normal; */
+        /*white-space: nowrap !important;*/
+    }
+
+
+    gr-table .table-bordered > tbody > tr > td,
+    gr-table .table-bordered > tbody > tr > th {
+        padding: 3px;
+        font-size: small;
+    }
+
+
+
+@media (max-width: 991px) {
+    gr-table .table_pagination > div:nth-child(2) {
+        text-align: left;
+    }
+
+
+    gr-table .table-responsive {
+        width: 100%;
+        margin-bottom: 15px;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        border: 1px solid #DDD;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    gr-table table {
+        table-layout: fixed;
+        /* min-width: 991px; */
+        margin-bottom: 0px !important;
+    }
+
+        gr-table table > tbody > tr > td,
+        gr-table table > tbody > tr > th,
+        gr-table table > tfoot > tr > td,
+        gr-table table > tfoot > tr > th,
+        gr-table table > thead > tr > td,
+        gr-table table > thead > tr > th {
+            /*white-space: normal !important;*/
+            font-size: 12.5px !important;
+            white-space: nowrap !important;
+        }
+}
+
+@media (max-width: 480px) {
+    gr-table .table_pagination .pagination > li > a, gr-table .table_pagination .pagination > li > span {
+        padding: 6px 6px;
+    }
+}
+
+
+
+/* gr-dyn, gr-action, gr-search */
+.gr-dyn-input-date > ul > li > div > table {
+    width: 100%;
+    max-width:300px;
+}
+
+.gr-dyn-input-date table .btn:not(.btn-raised).btn-info {
+    color: rgba(0,0,0,.87);
+        padding: 4px 0px 4px;
+}
+.gr-dyn .form-group table td  em,
+.gr-dyn .form-group table td .btn {
+    padding: 4px 0px 4px !important;
+    font-size: 11.5px;
+}
+.gr-dyn .form-group table td .btn {
+    margin: 0px 0px;
+}
+
+gr-action .form-inline,
+gr-search .form-inline,
+.gr-dyn .form-inline {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 0px !important;
+}
+
+.gr-dyn {
+    display: inline-block;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+    .gr-dyn .gr-action button {
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+
+    .gr-dyn .gr-meta {
+        /*word-break: break-all;*/
+    }
+
+    .gr-dyn .input-group-addon {
+        padding: 6px 3px 6px 0px;
+        vertical-align: top;
+    }
+
+    .gr-dyn div .control-display {
+        padding: 4px 3px 0 0;
+        font-size: 12.5px;
+    }
+
+    .gr-dyn .form-group {
+        padding-bottom: 1px;
+        margin: 0px 0 0 0;
+    }
+
+    .gr-dyn label.checkbox-inline {
+        text-align: left !important;
+        padding-left: 10px !important;
+        padding-top: 0px !important;
+    }
+
+        .gr-dyn .checkbox .checkbox-material .check,
+        .gr-dyn label.checkbox-inline .checkbox-material .check {
+            width: 18px;
+            height: 18px;
+        }
+
+        .gr-dyn label.checkbox-inline .checkbox-material .check {
+            bottom: 0px;
+        }
+
+    .gr-dyn .form-group .btn-group {
+        text-align: left !important;
+        padding-left: 10px !important;
+        padding-top: 0px !important;
+    }
+
+    .gr-dyn .form-group .btn {
+        margin-top: 0px;
+    }
+
+    .gr-dyn .form-group label.control-label {
+        font-size: 12.5px;
+        line-height: 1.42857143;
+        font-weight: 500;
+        margin: 0 0 0 0;
+        color: #333;
+        text-align: right;
+    }
+
+    .gr-dyn .form-group .form-control {
+        margin-bottom: 0px;
+    }
+
+    .gr-dyn .input-group {
+        width: 100%;
+    }
+
+    .gr-dyn .form-group label > small {
+        margin-left: 5px;
+    }
+
+    .gr-dyn .form-group table td.form-group {
+        margin-top: 0px !important;
+    }
+
+    .gr-dyn .form-group table.timepicker {
+        position: absolute;
+    }
+
+    .gr-dyn textarea {
+        height: auto !important;
+    }
+
+    .gr-dyn .btn.btn-sm {
+        font-size: 12px;
+        padding: 2px 5px 0px;
+        margin: 2px 1px;
+    }
+
+    .gr-dyn .form-group table.timepicker td input {
+        margin-top: -2px;
+        padding-top: 0px;
+    }
+
+    .gr-dyn .form-group table td .btn {
+        padding: 9px 0px 0px;
+        font-size: 12.5px;
+    }
+
+    .gr-dyn .form-control {
+        height: 24px;
+        padding: 4px 0;
+        font-size: 12.5px;
+        line-height: 1.42857143;
+        z-index: inherit !important;
+    }
+
+        .gr-dyn .form-control:-moz-placeholder {
+            font-size: 12.5px !important;
+        }
+
+        .gr-dyn .form-control:-ms-input-placeholder {
+            font-size: 12.5px !important;
+        }
+
+        .gr-dyn .form-control::-webkit-input-placeholder {
+            font-size: 12.5px !important;
+        }
+
+    .gr-dyn .block-menu > small {
+        display: block;
+        margin-top: 5px;
+        font-size: 12.5px;
+    }
+
+    .gr-dyn .block-menu:after {
+        content: "";
+        width: 30px;
+        display: block;
+        border-bottom: solid 2px #333;
+        padding-top: 10px;
+    }
+
+    .gr-dyn .bootstrap-select {
+        padding: 2px 0;
+    }
+
+        .gr-dyn .bootstrap-select > button {
+            width: 100%;
+            text-align: left;
+            font-size: 12.5px;
+            padding: 4px 10px;
+        }
+
+            .gr-dyn .bootstrap-select > button > .caret {
+                float: right;
+                margin-top: 5px;
+            }
+
+        .gr-dyn .bootstrap-select .dropdown-menu {
+            width: 100%;
+            margin-top: 0px;
+        }
+
+            .gr-dyn .bootstrap-select .dropdown-menu > li > a {
+                padding: 2px 20px;
+                border-bottom: #efefef 1px solid;
+                cursor: pointer;
+            }
+
+    .gr-dyn tags-input .host {
+        margin: 0px 0px;
+    }
+
+    .gr-dyn tags-input .tags {
+        border: 0px solid #a9a9a9;
+        box-shadow: none !important;
+        padding: 0px;
+    }
+
+        .gr-dyn tags-input .tags .tag-item {
+            margin: 2px 2px 0px 0px;
+            padding: 0px 2px;
+            line-height: 0px;
+            height: auto;
+            background: none;
+            color: #fff;
+            border: 0px;
+            font-size: 12px;
+            padding: 2px 2px 0px;
+            -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2);
+            box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2);
+            background-color: #1e90ff !important;
+        }
+
+    .gr-dyn .checkbox input[type=checkbox]:checked + .checkbox-material .check,
+    .gr-dyn label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check {
+        border-color: #1e90ff;
+    }
+
+        .gr-dyn .checkbox input[type=checkbox]:checked + .checkbox-material .check:before,
+        .gr-dyn label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:before {
+            color: #1e90ff;
+        }
+
+    .gr-dyn tags-input .tags .tag-item .remove-button {
+        color: #fff;
+    }
+
+    .gr-dyn tags-input .tags .input {
+        height: auto;
+        font-size: 12.5px;
+        vertical-align: text-bottom;
+        height: 20px;
+        margin: 0px;
+        font-family: Roboto,Helvetica,Arial,sans-serif;
+    }
+
+    .gr-dyn tags-input {
+        font-size: 12.5px;
+        width: 100%;
+        border-bottom: 1px solid #d2d2d2;
+    }
+
+        .gr-dyn tags-input span {
+            font-size: 12.5px;
+        }
+
+        .gr-dyn tags-input .autocomplete .suggestion-item em {
+            font: normal bold 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #000;
+            background-color: #fff;
+        }
+
+        .gr-dyn tags-input .autocomplete .suggestion-item {
+            font: normal 300 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+@media (max-width: 990px) {
+    .gr-dyn {
+        min-height: 48px !important;
+    }
+}
+
+@media only screen and (min-width: 991px) {
+    .gr-dyn .form-group span.btn-group {
+        width: calc(100% - 70px) !important;
+        padding-left:0px !important;
+    }
+    .gr-dyn .form-group .btn-group
+    .gr-dyn label.checkbox-inline {
+        width: calc(100% - 200px) !important;
+    }
+
+    .gr-dyn .form-group {
+        margin: 10px 0 0 0;
+    }
+
+        .gr-dyn .form-group > label {
+            width: 190px;
+            text-align: right;
+            padding-top: 5px;
+        }
+
+        .gr-dyn .form-group > .form-control,
+        .gr-dyn .form-group > .help-block,
+        .gr-dyn .form-group > .input-group {
+            width: calc(100% - 200px);
+            float: right;
+        }
+
+        .gr-dyn .form-group > .help-block {
+            right: 0;
+        }
+
+    .gr-dyn {
+        min-height: 37px !important;
+    }
+}
+
+.gr-dyn.no-label {
+    width: 100%;
+}
+
+    .gr-dyn.no-label input {
+        width: 100%;
+    }
+
+    .gr-dyn.no-label .input-group {
+        width: 100%;
+    }
+
+.gr-dyn .error-message {
+    font-size: x-small;
+    position: absolute;
+    color: #a94442;
+}
+
+.gr-dyn .has-error label.control-label {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #a94442;
+}
+
+.gr-dyn .with-error label.control-label {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #a94442;
+}
+
+.with-error .input-group-addon {
+    color: #a94442;
+    border-color: #a94442;
+}
+
+.required-hint {
+    color: #a94442;
+}
+
+
+.gr-action-bar {
+    min-height: 50px;
+    margin-bottom: 0px !important;
+}
+
+
+/* gr-upload*/
+
+@media only screen and (min-width: 991px) {
+    gr-upload > div {
+        width: calc(100% - 200px) !important;
+        display: block;
+        margin-left: 200px;
+    }
+}
+
+gr-upload > div {
+    padding: 15px 15px 0;
+}
+
+gr-upload .file-drop-overlay {
+    padding: 15px 15px;
+    border: 2px dashed #843b56;
+    background: rgba(210, 213, 217, 0.56);
+    width: 150px;
+    height: 60px;
+}
+
+gr-upload .upload-queue-container {
+    height: 120px;
+}
+
+    gr-upload .upload-queue-container div {
+        display: inline-block;
+    }
+
+gr-upload .upload-queue-container-item {
+    margin: 2px;
+    display: inline-block;
+}
+
+    gr-upload .upload-queue-container-item img {
+        height: 120px;
+    }
+
+gr-upload .btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+    gr-upload .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 40px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+
+gr-upload .uploader-panel {
+    float: left;
+}
+
+gr-upload .uploader-container {
+    float: left;
+}
+
+
+/* gr-upload-gallery*/
+
+@media only screen and (min-width: 991px) {
+    gr-upload-gallery > div {
+        width: calc(100% - 200px) !important;
+        display: block;
+        margin-left: 200px;
+    }
+}
+
+gr-upload-gallery > div {
+    padding: 0 15px;
+}
+
+    gr-upload-gallery > div > div {
+        width: 100%;
+        display: inline-block;
+    }
+
+gr-upload-gallery .file-container {
+    background-color: whitesmoke;
+    overflow-x: auto;
+}
+
+gr-upload-gallery .image-container {
+    background-color: whitesmoke;
+    overflow-x: auto;
+    height: 130px;
+}
+
+gr-upload-gallery .container-child {
+    margin: 2px;
+    display: inline-block;
+}
+
+gr-upload-gallery .image-container .container-child {
+}
+
+gr-upload-gallery .container-child img {
+    display: none;
+}
+
+gr-upload-gallery .image-container .container-child img {
+    height: 120px;
+    display: block;
+}
+
+gr-upload-gallery .container-child .selector {
+    position: absolute;
+    font-size: 30px;
+    padding: 1px 3px;
+    color: green;
+}
+
+gr-upload-gallery .image-container .container-child .selector {
+    /*background-color: whitesmoke;*/
+}
+
+gr-upload-gallery .container-child i {
+    padding: 3px 3px;
+    font-size: 25px;
+}
+
+gr-upload-gallery .container-child .file-item {
+    padding: 0 10px;
+}
+
+gr-upload-gallery .gr-uploader .control-label {
+    color: black;
+    margin-bottom: 10px !important;
+}
+
+/* gr-query */
+
+@media only screen and (max-width: 990px) {
+    .gr-query .navbar-nav {
+        margin: 7.5px 0;
+    }
+
+    .gr-query .nav {
+        width: 100%;
+    }
+
+        .gr-query .nav > li {
+            display: inline-block;
+        }
+
+    .gr-query .nav-item .btn {
+        margin-left: 0px !important;
+        margin-right: 8px !important;
+    }
+}
+
+.gr-query {
+    margin-bottom: 0px !important;
+}
+
+    .gr-query .btn-link {
+        display: inline-block;
+        width: auto;
+    }
+
+
+    .gr-query select {
+        font-size: 12.5px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    .gr-dyn .form-group  .dropdown-menu .btn-group {
+        margin-top:0px;
+    }
+.gr-dyn-input-date table .btn:not(.btn-raised).btn-info {
+    background-color: #31708f; 
+}
+.gr-dyn-input-date table .btn:not(.btn-raised).btn-info span {
+    color:#fff;
+}
